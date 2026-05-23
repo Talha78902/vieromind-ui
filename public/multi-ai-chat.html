@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Multi-AI Chat - VieroMind</title>
+  <link rel="stylesheet" href="/css/styles.css"/>
+  <style>
+    html,body{height:100%;overflow:hidden;}
+    .chat-page{height:100vh;display:flex;flex-direction:column;}
+    .chat-body{flex:1;display:flex;overflow:hidden;min-height:0;}
+    .chat-main{flex:1;display:flex;flex-direction:column;min-width:0;min-height:0;}
+    .messages-area{flex:1;overflow-y:auto;padding:1rem;min-height:0;scroll-behavior:smooth;}
+    .messages-area::-webkit-scrollbar{width:4px;}
+    .messages-area::-webkit-scrollbar-thumb{background:rgba(168,85,247,0.3);border-radius:4px;}
+    .chat-sidebar{width:260px;flex-shrink:0;overflow-y:auto;display:none;flex-direction:column;gap:0.5rem;padding:1rem;border-right:1px solid rgba(168,85,247,0.15);}
+    @media(min-width:768px){.chat-sidebar{display:flex;}}
+    .user-info-bar{display:flex;align-items:center;gap:6px;padding:8px 12px;background:rgba(147,51,234,0.1);border:1px solid rgba(168,85,247,0.2);border-radius:8px;font-size:0.75rem;color:#d8b4fe;margin-bottom:4px;}
+    .clear-chat-btn{padding:8px;border-radius:8px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);color:#fca5a5;font-size:0.75rem;cursor:pointer;text-align:center;}
+    .sidebar-logout-btn{padding:8px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);color:#9ca3af;font-size:0.75rem;cursor:pointer;text-align:center;}
+    .saving-indicator{font-size:0.65rem;color:rgba(255,255,255,0.3);text-align:center;margin-top:2px;height:14px;}
+  </style>
+</head>
+<body>
+  <div style="position:fixed;top:-10%;left:20%;width:500px;height:500px;background:radial-gradient(circle,rgba(168,85,247,0.08),transparent 70%);pointer-events:none;z-index:0;"></div>
+  <div style="position:fixed;bottom:10%;right:10%;width:400px;height:400px;background:radial-gradient(circle,rgba(56,189,248,0.08),transparent 70%);pointer-events:none;z-index:0;"></div>
+  <div class="chat-page">
+    <div class="chat-header">
+      <a href="/?features=1" class="chat-back-btn">&#8592; Back</a>
+      <div class="chat-header-center">
+        <div class="chat-header-title glow-text">Multi-AI Chat</div>
+        <div class="chat-header-sub">4 AI personalities · Group &amp; Private</div>
+      </div>
+      <div class="chat-header-avatars" id="header-avatars"></div>
+    </div>
+    <div class="chat-body">
+      <div class="chat-sidebar" id="chat-sidebar"></div>
+      <div class="chat-main">
+        <div class="mobile-tabs" id="mobile-tabs"></div>
+        <div class="chat-area-header" id="chat-area-header"></div>
+        <div class="messages-area" id="messages-area"></div>
+        <div class="chat-input-area">
+          <div class="chat-input-row">
+            <textarea class="chat-textarea" id="chat-input" rows="1" placeholder="Message all 4 AIs…"></textarea>
+            <button class="chat-send-btn" id="send-btn" onclick="handleSend()" title="Send">&#10148;</button>
+          </div>
+          <div class="chat-input-hint" id="input-hint">All 4 AIs will respond · Enter to send</div>
+          <div class="saving-indicator" id="saving-indicator"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="/js/multi-ai-chat.js"></script>
+</body>
+</html>

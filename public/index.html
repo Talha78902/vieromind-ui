@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>VieroMind - Next Gen Mental Health App</title>
+  <link rel="stylesheet" href="/css/styles.css"/>
+  <style>
+    /* ── Floating icons positions ── */
+    .floating-icon:nth-child(1){top:20%;left:15%;animation:float1 9s ease-in-out infinite;}
+    .floating-icon:nth-child(2){top:30%;left:75%;animation:float2 10.5s ease-in-out infinite;}
+    .floating-icon:nth-child(3){top:70%;left:20%;animation:float3 12s ease-in-out infinite;}
+    .floating-icon:nth-child(4){top:65%;left:80%;animation:float4 13.5s ease-in-out infinite;}
+    @keyframes float1{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-20px) rotate(10deg)}}
+    @keyframes float2{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-20px) rotate(10deg)}}
+    @keyframes float3{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-20px) rotate(10deg)}}
+    @keyframes float4{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-20px) rotate(10deg)}}
+
+    /* ── Entrance animations ── */
+    @keyframes navbarSlideDown{from{transform:translateY(-80px);opacity:0}to{transform:translateY(0);opacity:1}}
+    @keyframes heroFadeIn     {from{opacity:0;transform:translateY(-40px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes btnPop         {from{opacity:0;transform:scale(0.75)}to{opacity:1;transform:scale(1)}}
+    @keyframes fadePulse      {0%,100%{opacity:0.6;transform:scale(1)}50%{opacity:1;transform:scale(1.15)}}
+    @keyframes cardIn1{0%,0%  {opacity:0;transform:translateY(70px)}100%{opacity:1;transform:translateY(0)}}
+    @keyframes cardIn2{0%,15% {opacity:0;transform:translateY(70px)}100%{opacity:1;transform:translateY(0)}}
+    @keyframes cardIn3{0%,30% {opacity:0;transform:translateY(70px)}100%{opacity:1;transform:translateY(0)}}
+
+    /* ── Apply animations ── */
+    .navbar{animation:navbarSlideDown 0.7s cubic-bezier(0.22,1,0.36,1) both;}
+    .home-hero-title{animation:heroFadeIn 1s cubic-bezier(0.22,1,0.36,1) 0.15s both;}
+    #hero-btn{animation:btnPop 0.65s cubic-bezier(0.34,1.56,0.64,1) 0.5s both;}
+    .blur-blob{animation:fadePulse 10s ease-in-out infinite;}
+
+    /* ── Feature cards stagger (added when .visible class set) ── */
+    .features-grid.visible .feature-card:nth-child(1){animation:cardIn1 0.85s cubic-bezier(0.22,1,0.36,1) both;}
+    .features-grid.visible .feature-card:nth-child(2){animation:cardIn2 0.85s cubic-bezier(0.22,1,0.36,1) both;}
+    .features-grid.visible .feature-card:nth-child(3){animation:cardIn3 0.85s cubic-bezier(0.22,1,0.36,1) both;}
+    .feature-card{transform-origin:center;}
+    .feature-card:hover{transform:translateY(-6px) rotate(0.7deg) scale(1.03) !important;}
+
+    /* ── User bar ── */
+    .user-bar{position:fixed;top:16px;right:20px;z-index:100;display:flex;align-items:center;gap:10px;}
+    .user-chip{display:flex;align-items:center;gap:8px;background:rgba(147,51,234,0.2);border:1px solid rgba(168,85,247,0.4);border-radius:9999px;padding:6px 16px;font-size:0.82rem;color:#d8b4fe;}
+    .logout-btn{padding:6px 14px;border-radius:9999px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:#9ca3af;font-size:0.82rem;cursor:pointer;transition:all 0.2s;}
+    .logout-btn:hover{background:rgba(239,68,68,0.2);color:#fca5a5;border-color:rgba(239,68,68,0.3);}
+    .login-btn-top{padding:6px 18px;border-radius:9999px;background:linear-gradient(135deg,#9333ea,#ec4899);color:#fff;font-size:0.85rem;font-weight:600;cursor:pointer;border:none;transition:transform 0.2s;}
+    .login-btn-top:hover{transform:scale(1.05);}
+  </style>
+</head>
+<body>
+  <!-- Background blurs -->
+  <div class="floating-blurs">
+    <div class="blur-blob" style="position:absolute;width:450px;height:450px;background:rgba(147,51,234,0.4);filter:blur(180px);border-radius:50%;top:-100px;left:-100px;animation-delay:0s;"></div>
+    <div class="blur-blob" style="position:absolute;width:400px;height:400px;background:rgba(236,72,153,0.4);filter:blur(150px);border-radius:50%;bottom:-100px;right:-100px;animation-delay:3s;"></div>
+    <div class="blur-blob" style="position:absolute;width:600px;height:600px;background:rgba(37,99,235,0.3);filter:blur(200px);border-radius:50%;top:30%;left:25%;animation-delay:6s;"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <img class="navbar-logo" src="/logo.webp" alt="VieroMind"/>
+      <h2 class="navbar-title glow-text">VieroMind</h2>
+    </div>
+  </nav>
+
+  <!-- User bar -->
+  <div class="user-bar" id="user-bar"></div>
+
+  <!-- Floating background icons (large, like original) -->
+  <div class="floating-icons">
+    <div class="floating-icon"><img src="/icons/doctor.svg"   alt="" style="width:190px;height:190px;filter:drop-shadow(0 0 12px rgba(168,85,247,0.6));"/></div>
+    <div class="floating-icon"><img src="/icons/therapist.svg" alt="" style="width:190px;height:190px;filter:drop-shadow(0 0 12px rgba(168,85,247,0.6));"/></div>
+    <div class="floating-icon"><img src="/icons/finder.svg"   alt="" style="width:190px;height:190px;filter:drop-shadow(0 0 12px rgba(168,85,247,0.6));"/></div>
+    <div class="floating-icon"><img src="/icons/ai.svg"       alt="" style="width:190px;height:190px;filter:drop-shadow(0 0 12px rgba(168,85,247,0.6));"/></div>
+  </div>
+
+  <!-- Main content -->
+  <main class="home-main">
+    <h1 class="home-hero-title">Welcome to <span>VieroMind</span></h1>
+
+    <!-- Always show "Let's Go" button first — matches original React behavior (no localStorage skip) -->
+    <button id="hero-btn" class="animated-btn">Let's Go</button>
+
+    <!-- Feature cards — hidden until button clicked -->
+    <div id="features-section" class="features-grid" style="display:none;">
+      <a class="feature-card" href="/mbti">
+        <div class="feature-card-img"><img src="/icons/quiz.png" alt="MBTI"/></div>
+        <h3>MBTI Personality Quiz</h3>
+        <p>Discover your personality type through our engaging test.</p>
+        <span class="feature-badge">Hot</span>
+      </a>
+      <a class="feature-card" href="/therapist-finder">
+        <div class="feature-card-img"><img src="/icons/doctor.svg" alt="Therapist"/></div>
+        <h3>Therapist Finder</h3>
+        <p>Find and connect with expert therapists worldwide.</p>
+        <span class="feature-badge">New</span>
+      </a>
+      <a class="feature-card" id="chat-card" href="/multi-ai-chat">
+        <div class="feature-card-img"><img src="/icons/ai.png" alt="AI Chat"/></div>
+        <h3>Multi-AI Chat Demo</h3>
+        <p>Experience chatting with multiple AI minds in real time.</p>
+        <span class="feature-badge">Live</span>
+      </a>
+    </div>
+  </main>
+
+  <script>
+    // If coming back from a sub-page, skip straight to features
+    if (new URLSearchParams(window.location.search).get("features") === "1") {
+      document.getElementById("hero-btn").style.display = "none";
+      var fs = document.getElementById("features-section");
+      fs.style.display = "grid";
+      void fs.offsetWidth;
+      fs.classList.add("visible");
+      // Clean the URL so refreshing shows welcome again
+      history.replaceState(null, "", "/");
+    }
+
+    document.getElementById("hero-btn").addEventListener("click", function () {
+      const btn = this;
+      const fs  = document.getElementById("features-section");
+
+      // Fade button out
+      btn.style.transition = "opacity 0.25s, transform 0.25s";
+      btn.style.opacity    = "0";
+      btn.style.transform  = "scale(0.8)";
+
+      setTimeout(function () {
+        btn.style.display = "none";
+        fs.style.display  = "grid";
+        // Force reflow so CSS animation triggers
+        void fs.offsetWidth;
+        fs.classList.add("visible");
+      }, 260);
+    });
+
+    // Auth bar — gracefully handles server being offline
+    fetch("/api/auth/me")
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        var bar = document.getElementById("user-bar");
+        if (data.loggedIn) {
+          bar.innerHTML = '<div class="user-chip">👤 ' + data.username + '</div>'
+            + '<button class="logout-btn" onclick="doLogout()">Logout</button>';
+        } else {
+          bar.innerHTML = '<button class="login-btn-top" onclick="location.href=\'/login\'">Login / Register</button>';
+          var cc = document.getElementById("chat-card");
+          if (cc) cc.addEventListener("click", function(e){ e.preventDefault(); location.href="/login"; });
+        }
+      })
+      .catch(function(){
+        document.getElementById("user-bar").innerHTML =
+          '<button class="login-btn-top" onclick="location.href=\'/login\'">Login / Register</button>';
+      });
+
+    function doLogout(){
+      fetch("/api/auth/logout", { method: "POST" }).then(function(){ location.reload(); });
+    }
+  </script>
+</body>
+</html>
